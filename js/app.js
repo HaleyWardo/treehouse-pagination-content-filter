@@ -71,6 +71,7 @@ function searchFilter() {
   $('.page-header').append(searchInput);
 
   const $studentNames = $('.student-details h3');
+  console.log($studentNames)
   const $studentSearch = $('.student-search input');
 
   $('.student-search button').on('click', () => {
@@ -81,7 +82,7 @@ function searchFilter() {
     for (let i = 0; i < $studentNames.length; i++) {
       $studentContainer = $($studentNames[i]).parent().parent();
       //Conditional to check if search value is included in the studentNames array.
-      if ($studentNames[i].innerHTML.includes($studentSearch.val())) {
+      if ($studentNames[i].innerHTML.toUpperCase().includes($studentSearch.val().toUpperCase())) {
         $('.no-results-container').remove();
         $studentsFound = true;
         //Results array to be passed into showPage and appendPageLinks function
@@ -95,6 +96,7 @@ function searchFilter() {
     //If no results are found then display message for no results and then remove pagination links.
     $studentSearch.val('');
     if (!$studentsFound) {
+      $('.no-results-container').remove();
       displayNoResults();
       $('.pagination').remove();
     }
