@@ -1,7 +1,7 @@
-const $numberPerPage = 10;
-let $pageSelected = 1;
-let $studentLinkNumber = 1;
-const $studentItem = $('.student-item');
+const numberPerPage = 10;
+let pageSelected = 1;
+let studentLinkNumber = 1;
+const studentItem = $('.student-item');
 
 /**
  * Compares the page number and max amount of students allowed on page.
@@ -10,7 +10,7 @@ const $studentItem = $('.student-item');
  * @param {Array} studentItems
  */
 function showPage(pageNumber, studentItems) {
-  for (let i = 0; i < $studentItem.length; i++) {
+  for (let i = 0; i < studentItem.length; i++) {
     if (i < (pageNumber * 10) && i >= ((pageNumber - 1) * 10)) {
       $(studentItems[i]).show();
     } else {
@@ -29,30 +29,30 @@ function showPage(pageNumber, studentItems) {
  * @param {Array} studentList
  */
 function appendPageLinks(studentList) {
-  const $totalPages = Math.ceil(studentList.length / $numberPerPage);
-  let $pageLink = `
+  const totalPages = Math.ceil(studentList.length / numberPerPage);
+  let pageLink = `
     <div class="pagination">
       <ul>`;
 
-  for (let i = 0; i < $totalPages; i++) {
-    $pageLink += `
+  for (let i = 0; i < totalPages; i++) {
+    pageLink += `
       <li>
-        <a href="#">${$studentLinkNumber}</a>
+        <a href="#">${studentLinkNumber}</a>
       </li>`;
-    $studentLinkNumber += 1;
+    studentLinkNumber += 1;
   }
 
-  $pageLink += `
+  pageLink += `
       </ul>
     </div>`;
 
-  $('.page').append($pageLink);
+  $('.page').append(pageLink);
 
   $('.pagination').on('click', (e) => {
     if (e.target.tagName === 'A') {
       $('a').removeClass('active');
-      $pageSelected = $(e.target).text();
-      showPage($pageSelected, $studentItem);
+      pageSelected = $(e.target).text();
+      showPage(pageSelected, studentItem);
       $(e.target).addClass('active');
     }
   });
@@ -70,32 +70,31 @@ function searchFilter() {
 
   $('.page-header').append(searchInput);
 
-  const $studentNames = $('.student-details h3');
-  console.log($studentNames)
-  const $studentSearch = $('.student-search input');
+  const studentNames = $('.student-details h3');
+  const studentSearch = $('.student-search input');
 
   $('.student-search button').on('click', () => {
-    let $studentsFound = false;
-    let $results = [];
-    let $studentContainer;
+    let studentsFound = false;
+    let results = [];
+    let studentContainer;
 
-    for (let i = 0; i < $studentNames.length; i++) {
-      $studentContainer = $($studentNames[i]).parent().parent();
+    for (let i = 0; i < studentNames.length; i++) {
+      studentContainer = $(studentNames[i]).parent().parent();
       //Conditional to check if search value is included in the studentNames array.
-      if ($studentNames[i].innerHTML.toUpperCase().includes($studentSearch.val().toUpperCase())) {
+      if (studentNames[i].innerHTML.toUpperCase().includes(studentSearch.val().toUpperCase())) {
         $('.no-results-container').remove();
-        $studentsFound = true;
+        studentsFound = true;
         //Results array to be passed into showPage and appendPageLinks function
-        $results.push($($studentNames[i]).parent().parent());
-        $studentContainer.show();
+        results.push($(studentNames[i]).parent().parent());
+        studentContainer.show();
       } else {
-        $studentContainer.hide();
+        studentContainer.hide();
       }
     }
 
     //If no results are found then display message for no results and then remove pagination links.
-    $studentSearch.val('');
-    if (!$studentsFound) {
+    studentSearch.val('');
+    if (!studentsFound) {
       $('.no-results-container').remove();
       displayNoResults();
       $('.pagination').remove();
@@ -104,11 +103,11 @@ function searchFilter() {
     /*Removes the old pagination links and resets the number of links.
     **Calls the showPage and appendPageLinks functions so only the
     **correct amount of links and students are shown.*/
-    if ($studentsFound) {
+    if (studentsFound) {
       $('.pagination').remove();
-      $studentLinkNumber = 1;
-      showPage(1, $results);
-      appendPageLinks($results);
+      studentLinkNumber = 1;
+      showPage(1, results);
+      appendPageLinks(results);
     }
   });
 }
@@ -117,15 +116,15 @@ function searchFilter() {
  * Creates no results message and appends to the DOM.
  */
 function displayNoResults() {
-  const $noResultsHTML = `
+  const noResultsHTML = `
     <div class="no-results-container">
       <p>No results found</p>
     <div>`;
 
-  $('.page-header').append($noResultsHTML);
+  $('.page-header').append(noResultsHTML);
 }
 
 //Function calls
-showPage($pageSelected, $studentItem);
-appendPageLinks($studentItem);
+showPage(pageSelected, studentItem);
+appendPageLinks(studentItem);
 searchFilter();
