@@ -1,7 +1,14 @@
 const $numberPerPage = 10;
 let $pageSelected = 1;
+let $studentLinkNumber = 1;
 const $studentItem = $('.student-item');
 
+/**
+ * Compares the page number and max amount of students allowed on page.
+ * Decides which student items should be displayed.
+ * @param {int} pageNumber
+ * @param {Array} studentItems
+ */
 function showPage(pageNumber, studentItems) {
   $studentItem.hide();
 
@@ -13,31 +20,34 @@ function showPage(pageNumber, studentItems) {
     }
   }
 
+  //Removes no results container if a page is clicked and students are displayed.
   $('.no-results-container').remove();
 }
 
-showPage($pageSelected,$studentItem);
-
+/**
+ * Calculates the number of pages that should be displayed on the page.
+ * Creates the correct amount of page links depending on the amount of student items.
+ * @param {Array} studentList
+ */
 function appendPageLinks(studentList) {
   const $totalPages = Math.ceil(studentList.length / $numberPerPage);
   let $pageLink = `
     <div class="pagination">
-      <ul>  `;
-  let $studentLinkNumber = 1;
+      <ul>`;
 
   for (let i = 0; i < $totalPages; i++) {
     $pageLink += `
-        <li>
-          <a href="#">${$studentLinkNumber}</a>
-        </li>`;
-      $studentLinkNumber += 1;
+      <li>
+        <a href="#">${$studentLinkNumber}</a>
+      </li>`;
+    $studentLinkNumber += 1;
   }
 
   $pageLink += `
       </ul>
     </div>`;
 
-    $('.page').append($pageLink);
+  $('.page').append($pageLink);
 
   $('.pagination').on('click', (e) => {
     if (e.target.tagName === 'A') {
@@ -48,8 +58,10 @@ function appendPageLinks(studentList) {
     }
   });
 }
-appendPageLinks($studentItem);
 
+/**
+ * Dynamically filters users and renders that student list item.
+ */
 function searchFilter() {
   let searchInput = `
     <div class="student-search">
@@ -66,6 +78,7 @@ function searchFilter() {
     let studentsFound = false;
 
     for (let i = 0; i < $studentNames.length; i++) {
+      //Conditional to check if search value is included in the studentNames array.
       if ($studentNames[i].innerHTML.includes($studentSearch.val())) {
         $($studentNames[i]).parent().parent().show();
         $('.no-results-container').remove();
@@ -81,8 +94,10 @@ function searchFilter() {
     }
   });
 }
-searchFilter();
 
+/**
+ * Creates no results message and appends to the DOM.
+ */
 function displayNoResults() {
   const $noResultsHTML = `
     <div class="no-results-container">
@@ -91,3 +106,8 @@ function displayNoResults() {
 
   $('.page-header').append($noResultsHTML);
 }
+
+//Function calls
+showPage($pageSelected, $studentItem);
+appendPageLinks($studentItem);
+searchFilter();
