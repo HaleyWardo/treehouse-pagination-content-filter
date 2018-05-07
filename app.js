@@ -10,8 +10,6 @@ const $studentItem = $('.student-item');
  * @param {Array} studentItems
  */
 function showPage(pageNumber, studentItems) {
-  $studentItem.hide();
-
   for (let i = 0; i < $studentItem.length; i++) {
     if (i < (pageNumber * 10) && i >= ((pageNumber - 1) * 10)) {
       $(studentItems[i]).show();
@@ -23,6 +21,7 @@ function showPage(pageNumber, studentItems) {
   //Removes no results container if a page is clicked and students are displayed.
   $('.no-results-container').remove();
 }
+
 
 /**
  * Calculates the number of pages that should be displayed on the page.
@@ -75,22 +74,39 @@ function searchFilter() {
   const $studentSearch = $('.student-search input');
 
   $('.student-search button').on('click', () => {
-    let studentsFound = false;
+    let $studentsFound = false;
+    let $results = [];
+    let $studentContainer;
 
     for (let i = 0; i < $studentNames.length; i++) {
+      $studentContainer = $($studentNames[i]).parent().parent();
       //Conditional to check if search value is included in the studentNames array.
       if ($studentNames[i].innerHTML.includes($studentSearch.val())) {
-        $($studentNames[i]).parent().parent().show();
         $('.no-results-container').remove();
-        studentsFound = true;
+        $studentsFound = true;
+        //Results array to be passed into showPage and appendPageLinks function
+        $results.push($($studentNames[i]).parent().parent());
+        $studentContainer.show();
       } else {
-        $($studentNames[i]).parent().parent().hide();
+        $studentContainer.hide();
       }
     }
 
+    //If no results are found then display message for no results and then remove pagination links.
     $studentSearch.val('');
-    if (!studentsFound) {
+    if (!$studentsFound) {
       displayNoResults();
+      $('.pagination').remove();
+    }
+
+    /*Removes the old pagination links and resets the number of links.
+    **Calls the showPage and appendPageLinks functions so only the
+    **correct amount of links and students are shown.*/
+    if ($studentsFound) {
+      $('.pagination').remove();
+      $studentLinkNumber = 1;
+      showPage(1, $results);
+      appendPageLinks($results);
     }
   });
 }
