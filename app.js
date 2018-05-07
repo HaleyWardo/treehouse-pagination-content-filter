@@ -12,7 +12,10 @@ function showPage(pageNumber, studentItems) {
       $(studentItems[i]).hide();
     }
   }
+
+  $('.no-results-container').remove();
 }
+
 showPage($pageSelected,$studentItem);
 
 function appendPageLinks(studentList) {
@@ -51,32 +54,40 @@ function searchFilter() {
   let searchInput = `
     <div class="student-search">
       <input placeholder="Search for students...">
-      <button>Search</button>
+      <button class="student-search-btn">Search</button>
     </div>`;
 
   $('.page-header').append(searchInput);
 
-  const $studentNames = $('.student-details h3').text().toLowerCase();
+  const $studentNames = $('.student-details h3');
   const $studentSearch = $('.student-search input');
 
   $('.student-search button').on('click', () => {
-  //   for (let i = 0; i < $studentItem.length; i++) {
-  //   if ($studentNames.includes($studentSearch.val())) {
-  //     console.log($studentItem[i]);
-  //       $($studentItem[i]).show();
-  //     } else {
-  //       $($studentItem[i]).hide();
-  //     }
-  //   }
+    let studentsFound = false;
 
-    $studentItem.each((index, student) => {
-      if ($studentNames.includes($studentSearch.val())) {
-        student.style.display = "inline";
+    for (let i = 0; i < $studentNames.length; i++) {
+      if ($studentNames[i].innerHTML.includes($studentSearch.val())) {
+        $($studentNames[i]).parent().parent().show();
+        $('.no-results-container').remove();
+        studentsFound = true;
       } else {
-        student.style.display = "none";
+        $($studentNames[i]).parent().parent().hide();
       }
-    });
+    }
+
+    $studentSearch.val('');
+    if (!studentsFound) {
+      displayNoResults();
+    }
   });
 }
 searchFilter();
 
+function displayNoResults() {
+  const $noResultsHTML = `
+    <div class="no-results-container">
+      <p>No results found</p>
+    <div>`;
+
+  $('.page-header').append($noResultsHTML);
+}

@@ -1,5 +1,5 @@
 body{
-  background-color: #e1f1f6;
+  background-color: #4ba6c3;
   font-family: Helvetica, sans-serif;
   color: #222;
 }
@@ -14,106 +14,144 @@ body{
 
 .page-header{
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
-  .page-header h2{
-    float: left;
-    font-size: 22px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #555;
-  }
 
-  .page-header .student-search{
-    float: right;
-  }
+.page-header h2{
+  font-size: 22px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #555;
+}
 
-    .page-header .student-search input{
-      border-radius: 5px;
-      border: 1px solid #eaeaea;
-      padding: 8px 15px;
-      font-size: 14px;
-    }
+.page-header h2,
+.student-search {
+  width: 50%;
+}
 
-    .page-header .student-search button{
-      border-radius: 5px;
-      border: 1px solid #eaeaea;
-      padding: 8px 15px;
-      font-size: 14px;
-      background-color: #4ba6c3;
-      color: #fff
-    }
+.page-header .student-search input{
+  border-radius: 5px;
+  border: 1px solid #eaeaea;
+  padding: 8px 15px;
+  font-size: 14px;
+}
 
-.student-list{}
+.student-search input {
+  transition: .8s ease-in-out;
+}
 
-  .student-item{
-    margin: 0 0 20px 0;
-    padding: 0 0 20px 0;
-    border-bottom: 1px solid #eaeaea;
-  }
+.student-search input:hover {
+  background-color: #DCD3C4;
+  transition: .8s ease-in-out;
+}
 
-    .student-details{
-      width: 50%;
-      float: left;
-    }
+.student-search input:focus {
+  background-color: #DCD3C4;
+}
 
-      .student-details .avatar{
-        width: 40px;
-        height: auto;
-        border-radius: 20px;
-        float: left;
-        margin-right: 14px
-      }
+.page-header .student-search button{
+  border-radius: 5px;
+  border: 1px solid #eaeaea;
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #4ba6c3;
+  color: #fff
+}
 
-      .student-details h3{
-        margin: 4px 0 2px 0;
-        font-weight: bold;
-        color: #4ba6c3;
-      }
+.student-search {
+  text-align: right;
+}
 
-      .student-details .email{
-        color: #888;
-        font-size: 14px;
-      }
+.student-search-btn {
+  cursor: pointer;
+}
+
+.no-results-container {
+  margin: 80px auto 60px auto;
+  text-align: center;
+  font-size: 25px;
+  font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.no-results-container p {
+  padding-bottom: 5px;
+  border-bottom: 2px solid #DCD3C4;
+  color: #555;
+}
+
+.student-item{
+  margin: 0 0 20px 0;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.student-details{
+  width: 50%;
+  float: left;
+}
+
+.student-details .avatar{
+  width: 40px;
+  height: auto;
+  border-radius: 20px;
+  float: left;
+  margin-right: 14px
+}
+
+.student-details h3{
+  margin: 4px 0 2px 0;
+  font-weight: bold;
+  color: #4ba6c3;
+}
+
+.student-details .email{
+  color: #888;
+  font-size: 14px;
+}
 
 
-    .joined-details{
-      width: 50%;
-      float: left;
-      text-align: right;
-    }
+.joined-details{
+  width: 50%;
+  float: left;
+  text-align: right;
+}
 
-      .joined-details .date{
-        margin-top: 15px;
-        display: block;
-        font-size: 14px;
-        color: #999;
-      }
+.joined-details .date{
+  margin-top: 15px;
+  display: block;
+  font-size: 14px;
+  color: #999;
+}
 
-  .student-item:last-child{
-    margin: 0;
-    padding: 0;
-    border-bottom: none;
-  }
+.student-item:last-child{
+  margin: 0;
+  padding: 0;
+  border-bottom: none;
+}
 
 .pagination{
   margin: 40px 0 0 0;
   text-align: center;
 }
- 
-  .pagination li{
-    display: inline;
-  }
 
-    .pagination li a{
-      border: 1px solid #eaeaea;
-      border-radius: 5px;
-      padding: 3px 8px;
-      text-decoration: none;
-      color: #4ba6c3;
-    }
+.pagination li{
+  display: inline;
+}
 
-    .pagination li a.active,
-    .pagination li a:hover{
-      background-color: #4ba6c3;
-      color: #fff;
-    }
+.pagination li a{
+  border: 1px solid #eaeaea;
+  border-radius: 5px;
+  padding: 3px 8px;
+  text-decoration: none;
+  color: #4ba6c3;
+}
+
+.pagination li a.active,
+.pagination li a:hover{
+  background-color: #4ba6c3;
+  color: #fff;
+  transition: .8s ease-in-out;
+}
